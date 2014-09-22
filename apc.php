@@ -2,9 +2,12 @@
 
 // config
 //----------------------------------------------------------------------
-define('ADMIN', ($_SERVER['REMOTE_ADDR']=='127.0.0.1' 
-				|| substr($_SERVER['REMOTE_ADDR'], 0, 8)=='192.168.') 
-				|| substr($_SERVER['REMOTE_ADDR'], 0, 3)=='10.');
+define('ADMIN', (
+	$_SERVER['REMOTE_ADDR']=='127.0.0.1' 
+	|| $_SERVER['REMOTE_ADDR']=='::1' 
+	|| substr($_SERVER['REMOTE_ADDR'], 0, 8)=='192.168.' 
+	|| substr($_SERVER['REMOTE_ADDR'], 0, 3)=='10.'
+	));
 
 define('VARLIST_MAX', 10);
 define('MAX_PREVIEW_MEM', '12000');
