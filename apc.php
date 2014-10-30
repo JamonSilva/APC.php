@@ -116,7 +116,8 @@ function test(){
 }
 function fill($size=null){
 	if(empty($size))
-		$size=sma_info(true)['avail_mem'];
+        $smaInfo = sma_info(true);
+		$size=$smaInfo['avail_mem'];
 	$chunk=100000;
 	for($i=$chunk; $i<($size-$chunk)*.97; $i+=$chunk)
 		cache_store('test_fill_'.$i, str_repeat(chr(rand(1,27)),$chunk));
@@ -326,7 +327,7 @@ echo '</p>';
 // global stats
 //----------------------------------------------------------------------
 echo '<p id="stats">';
-foreach([
+foreach(array(
 //'mem_size'=>'memory',
 //NSLOTS=>'slots',
 NINSERTS=>'inserts', 
@@ -335,7 +336,7 @@ NEXPUNGES=>'expunges',
 //NHITS=>'hits',
 //NMISSES=>'misses',
 //'ttl'=>'expire',
-] as $key=>$label) 
+        ) as $key=>$label)
 	echo val($info[$key], $label);
 echo '</p>';
 
@@ -362,7 +363,7 @@ echo bar($usedP, $freeP, $usedL, $freeL, $COLOR1, $COLOR5);
 $grids=($info[NSLOTS]<GRID_MAX)?$info[NSLOTS]:GRID_MAX;
 //echo val(size($blocksize=$total/$grids), 'blocksize');
 
-$space=[];
+$space=array();
 foreach($mem['block_lists'] as &$seg){
 	foreach($seg as $key=>&$block){
 		$start=$block['offset']/$total*$grids;
@@ -423,7 +424,8 @@ foreach($apc as $var){
 	if($c){ $c--; continue; }
 	end($vars);
 	if($var[ATIME]==$var['mtime']) $var[ATIME]=0;
-	if($var[SORT]>current($vars)[SORT]){
+    $currentVars = current($vars);
+	if($var[SORT]>$currentVars[SORT]){
 		array_pop($vars);
 		$vars[]=$var;
 		usort($vars, 'csort');
