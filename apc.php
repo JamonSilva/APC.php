@@ -50,8 +50,9 @@ if(!defined('APCU_APC_FULL_BC')){
 }else $apcu=2; // APCu
 define('APCu', $apcu);
 
-if(APCu){
-	define('APC_VERSION',phpversion('apcu'));
+define('APC_VERSION',phpversion('apc'.(APCu?'u':null)));
+
+if(APCu==2){
 	define('NHITS','nhits');
 	define('ATIME','atime');
 	define('CTIME','ctime');
@@ -63,7 +64,6 @@ if(APCu){
 	define('NINSERTS','ninserts');
 	define('NENTRIES','nentries');
 }else{
-	define('APC_VERSION',phpversion('apc'));
 	define('NHITS','num_hits');
 	define('ATIME','access_time');
 	define('CTIME','creation_time');
