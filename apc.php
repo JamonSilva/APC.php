@@ -43,9 +43,9 @@ if(!function_exists('apc_cache_info')
 	echo '<center><h1>APC not found</h1></center>';
 	return 1;
 }
-if(!defined('APCU_APC_FULL_BC')){
+if(!defined('APCU_APC_FULL_BC') && !function_exists('apcu_cache_info')){
 	$apcu=0; // APC
-}elseif(APCU_APC_FULL_BC){
+}elseif(defined('APCU_APC_FULL_BC') && APCU_APC_FULL_BC){
 	$apcu=1; // APCu APC-compatibility
 }else $apcu=2; // APCu
 define('APCu', $apcu);
