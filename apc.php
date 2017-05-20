@@ -409,7 +409,8 @@ echo '</span>';
 function csort($a, $b){
 	return $a[SORT]<$b[SORT];
 }
-$apc=new APCIterator('user','/'.$search.'/',APC_ITER_KEY|APC_ITER_MEM_SIZE|APC_ITER_MTIME|APC_ITER_ATIME|APC_ITER_NUM_HITS, null);
+if(class_exists('APCuIterator')) $apc=new APCuIterator('/'.$search.'/',APC_ITER_KEY|APC_ITER_MEM_SIZE|APC_ITER_MTIME|APC_ITER_ATIME|APC_ITER_NUM_HITS, null);
+else $apc=new APCIterator('user','/'.$search.'/',APC_ITER_KEY|APC_ITER_MEM_SIZE|APC_ITER_MTIME|APC_ITER_ATIME|APC_ITER_NUM_HITS, null);
 
 $c=0;
 $now=time();
