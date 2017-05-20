@@ -52,7 +52,13 @@ define('APCu', $apcu);
 
 define('APC_VERSION',phpversion('apc'.(APCu?'u':null)));
 
-if(APCu==2){
+// load APC info
+//----------------------------------------------------------------------
+
+$info=cache_info();
+$mem=sma_info();
+
+if(isset($info['stime'])){
 	define('NHITS','nhits');
 	define('ATIME','atime');
 	define('CTIME','ctime');
@@ -63,7 +69,7 @@ if(APCu==2){
 	define('NMISSES','nmisses');
 	define('NINSERTS','ninserts');
 	define('NENTRIES','nentries');
-}else{
+}else if(isset($info['start_time'])){
 	define('NHITS','num_hits');
 	define('ATIME','access_time');
 	define('CTIME','creation_time');
@@ -74,7 +80,7 @@ if(APCu==2){
 	define('NMISSES','num_misses');
 	define('NINSERTS','num_inserts');
 	define('NENTRIES','num_entries');
-}
+}else die('Unknown cache info');
 
 // actions
 //----------------------------------------------------------------------
@@ -284,11 +290,6 @@ if(!INCLUDED) echo <<<"h"
 h;
 else echo $style;
 echo '<div id="apcu" class="module">';
-
-// load APC info
-//----------------------------------------------------------------------
-$info=cache_info();
-$mem=sma_info();
 
 // header
 //----------------------------------------------------------------------
